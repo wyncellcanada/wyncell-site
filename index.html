@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyncell Canada - Friendly, Fast & Fair Internet</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        // Custom Tailwind theme configuration
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'wyncell-blue': '#00AEEF',
+                        'wyncell-dark': '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #00AEEF 100%);
+        }
+
+        .service-card {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-card .p-8 {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .service-card ul {
+            flex-grow: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Underline animation for nav links */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #00AEEF;
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* Speed meter custom property for width */
+        .speed-meter {
+            position: relative;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .speed-meter::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: var(--width, 0%); /* Use CSS custom property */
+            background: linear-gradient(90deg, #1e3a8a, #00AEEF);
+            border-radius: 3px;
+            transition: width 0.5s ease-in-out;
+        }
+        
+        /* Mobile Menu Animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .mobile-menu.active {
+            max-height: 500px; /* Adjust as needed */
+        }
+
+        .cta-button {
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="text-gray-800 bg-white">
+    <!-- Top Banner for promotions -->
+    <div class="bg-blue-900 text-white text-sm py-2 px-4 text-center">
+        <p>🔥 Limited time offer! Get 3 months free on select business internet plans. <a href="#business" class="font-bold underline hover:text-wyncell-blue">Learn more</a></p>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-wyncell-dark shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="flex items-center">
+                        <!-- DEV NOTE: Replace this src with your 'logo WYNCELL w.png' file path -->
+                        <img src="https://i.imgur.com/rJet8Cg.png" 
+                             alt="Wyncell Logo" class="h-8 w-auto">
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 font-medium">Home Internet</a>
+                    <a href="#business" class="nav-link text-gray-300 hover:text-white px-3 py-2 font-medium">Business Internet</a>
+                    <a href="#coverage" class="nav-link text-gray-300 hover:text-white px-3 py-2 font-medium">Coverage</a>
+                    <a href="#support" class="nav-link text-gray-300 hover:text-white px-3 py-2 font-medium">Support</a>
+                </div>
+                
+                <!-- Desktop Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="#" class="text-gray-300 hover:text-white px-3 py-2 font-medium">Login</a>
+                    <a href="#signup" class="cta-button bg-wyncell-blue hover:bg-sky-500 text-white px-4 py-2 rounded-md font-medium shadow-sm hover:shadow-lg">Sign Up</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i id="mobile-menu-icon" class="fas fa-bars text-xl transition-transform duration-300"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-wyncell-dark border-t border-gray-700">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Home Internet</a>
+                <a href="#business" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Business Internet</a>
+                <a href="#coverage" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Coverage</a>
+                <a href="#support" class="mobile-nav-link block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Support</a>
+            </div>
+            <div class="pt-4 pb-3 border-t border-gray-700">
+                <div class="px-5 flex items-center justify-between">
+                    <a href="#" class="text-gray-300 hover:text-white font-medium">Login</a>
+                    <a href="#signup" class="cta-button bg-wyncell-blue hover:bg-sky-500 text-white px-4 py-2 rounded-md font-medium">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="gradient-bg text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="text-center md:text-left">
+                        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight mb-6">Fast, Reliable Internet That Just Works.</h1>
+                        <p class="text-xl mb-8 opacity-90">Experience seamless connectivity with Wyncell. High-speed internet across Canada with no contracts and no surprises.</p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                            <a href="#home" class="cta-button bg-white text-wyncell-dark hover:bg-gray-200 px-8 py-3 rounded-md font-bold text-lg text-center shadow-lg">View Home Plans</a>
+                            <a href="#business" class="cta-button bg-transparent border-2 border-white hover:bg-white hover:text-wyncell-dark px-8 py-3 rounded-md font-bold text-lg text-center">View Business Plans</a>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <img src="https://images.unsplash.com/photo-1586953208448-3151cf7da4d5?q=80&w=2400&auto=format&fit=crop" 
+                             alt="Modern living room with a person relaxing and using a laptop" 
+                             class="rounded-lg shadow-2xl max-w-sm w-full md:max-w-full">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Wyncell Section -->
+        <section class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900">Why Choose Wyncell?</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">We do things differently to give you a better internet experience.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Feature 1: No Price Hikes -->
+                    <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-wyncell-blue mb-4 inline-block bg-sky-100 rounded-full p-4">
+                            <i class="fas fa-dollar-sign text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Honest Pricing</h3>
+                        <p class="text-gray-600">The price you sign up for is the price you pay. No unexpected price hikes after a few months.</p>
+                    </div>
+                    <!-- Feature 2: No Contracts -->
+                    <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-wyncell-blue mb-4 inline-block bg-sky-100 rounded-full p-4">
+                            <i class="fas fa-file-signature text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">No Contracts</h3>
+                        <p class="text-gray-600">Stay with us because you want to, not because you have to. Enjoy month-to-month flexibility.</p>
+                    </div>
+                    <!-- Feature 3: Canadian Support -->
+                    <div class="bg-white p-8 rounded-lg shadow-md text-center hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-wyncell-blue mb-4 inline-block bg-sky-100 rounded-full p-4">
+                            <i class="fas fa-headset text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Real Canadian Support</h3>
+                        <p class="text-gray-600">Our friendly, expert support team is based right here in Canada, ready to help you 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Home Internet Plans Section -->
+        <section id="home" class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900">Home Internet Plans</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">Competitive speeds and fair prices. Find the perfect plan for your household.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Plan 1: Basic 30 -->
+                    <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-8">
+                            <h3 class="text-xl font-bold text-gray-900">Basic 30</h3>
+                            <p class="text-gray-500 mb-6">For browsing & light streaming</p>
+                            <div class="mb-4">
+                                <span class="text-4xl font-extrabold">$44</span>
+                                <span class="text-2xl font-bold">.95</span>
+                                <span class="text-gray-600">/mo</span>
+                            </div>
+                            <div class="mb-6">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">Download Speed</span>
+                                    <span class="text-sm font-medium">30 Mbps</span>
+                                </div>
+                                <div class="speed-meter" style="--width: 7.5%"></div>
+                            </div>
+                            <ul class="space-y-3 mb-8 text-gray-700">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited data</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Good for 1-3 devices</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free modem rental</li>
+                            </ul>
+                            <a href="#signup" class="mt-auto cta-button block w-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-center py-3 rounded-md font-medium">Get Started</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Plan 2: Standard 60 (Featured) -->
+                    <div class="service-card bg-wyncell-dark text-white rounded-lg shadow-xl overflow-hidden relative transform lg:scale-105">
+                        <div class="absolute top-0 right-0 bg-wyncell-blue text-white px-3 py-1 text-xs font-bold rounded-bl-lg">MOST POPULAR</div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold">Standard 60</h3>
+                            <p class="opacity-80 mb-6">For HD streaming & family use</p>
+                            <div class="mb-4">
+                                <span class="text-4xl font-extrabold">$59</span>
+                                <span class="text-2xl font-bold">.95</span>
+                                <span class="opacity-80">/mo</span>
+                            </div>
+                            <div class="mb-6">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">Download Speed</span>
+                                    <span class="text-sm font-medium">60 Mbps</span>
+                                </div>
+                                <div class="speed-meter bg-gray-700" style="--width: 15%"><div class="speed-meter-after bg-wyncell-blue"></div></div>
+                            </div>
+                            <ul class="space-y-3 mb-8">
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Unlimited data</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Great for 4-6 devices</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-400 mr-3"></i>Free modem rental</li>
+                                <li class="flex items-center font-bold"><i class="fas fa-check text-green-400 mr-3"></i>Free installation</li>
+                            </ul>
+                            <a href="#signup" class="mt-auto cta-button block w-full bg-wyncell-blue hover:bg-sky-500 text-white text-center py-3 rounded-md font-bold">Get Started</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Plan 3: Ultra 120 -->
+                    <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-8">
+                            <h3 class="text-xl font-bold text-gray-900">Ultra 120</h3>
+                            <p class="text-gray-500 mb-6">For 4K streaming & gaming</p>
+                            <div class="mb-4">
+                                <span class="text-4xl font-extrabold">$79</span>
+                                <span class="text-2xl font-bold">.95</span>
+                                <span class="text-gray-600">/mo</span>
+                            </div>
+                            <div class="mb-6">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">Download Speed</span>
+                                    <span class="text-sm font-medium">120 Mbps</span>
+                                </div>
+                                <div class="speed-meter" style="--width: 30%"></div>
+                            </div>
+                            <ul class="space-y-3 mb-8 text-gray-700">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited data</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Perfect for 7-10 devices</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free modem rental</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free installation</li>
+                            </ul>
+                            <a href="#signup" class="mt-auto cta-button block w-full bg-gray-200 hover:bg-gray-300 text-gray-800 text-center py-3 rounded-md font-medium">Get Started</a>
+                        </div>
+                    </div>
+
+                    <!-- Plan 4: Giga-Fast 400 -->
+                    <div class="service-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="p-8">
+                            <h3 class="text-xl font-bold text-gray-900">Giga-Fast 400</h3>
+                            <p class="text-gray-500 mb-6">For power users & smart homes</p>
+                            <div class="mb-4">
+                                <span class="text-4xl font-extrabold">$94</span>
+                                <span class="text-2xl font-bold">.95</span>
+                                <span class="text-gray-600">/mo</span>
+                            </div>
+                            <div class="mb-6">
+                                <div class="flex justify-between mb-1">
+                                    <span class="text-sm font-medium">Download Speed</span>
+                                    <span class="text-sm font-medium">400 Mbps</span>
+                                </div>
+                                <div class="speed-meter" style="--width: 100%"></div>
+                            </div>
+                            <ul class="space-y-3 mb-8 text-gray-700">
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Unlimited data</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>For 10+ devices</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Free modem rental</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-3"></i>Priority support</li>
+                            </ul>
+                            <a href="#signup" class="mt-auto cta-button block w-full bg-gray-800 hover:bg-gray-900 text-white text-center py-3 rounded-md font-medium">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coverage Map Section -->
+        <section id="coverage" class="py-20 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                 <div class="text-center">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-900">We're All Across Canada</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-12">Our network is growing every day. Enter your postal code to see if Wyncell is available in your neighbourhood.</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-xl p-8 md:p-12">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold mb-6">Check availability at your address:</h3>
+                            <form id="coverage-form" class="flex flex-col sm:flex-row gap-2">
+                                <input type="text" id="postal-code-input" placeholder="Enter your postal code (e.g., A1A 1A1)" class="flex-grow px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wyncell-blue transition duration-300 text-lg">
+                                <button type="submit" class="cta-button bg-wyncell-blue hover:bg-sky-500 text-white px-8 py-3 rounded-md font-bold text-lg">Check</button>
+                            </form>
+                            <div id="coverage-response-area" class="mt-6">
+                                <p id="coverage-result" class="text-md font-medium"></p>
+                                <!-- Subscription Form - Initially Hidden -->
+                                <div id="notify-form" class="hidden mt-4 p-4 bg-sky-50 rounded-lg">
+                                    <p class="font-semibold mb-2">Get notified when we arrive!</p>
+                                    <p class="text-sm text-gray-600 mb-3">Enter your email and we'll let you know as soon as we're in your area.</p>
+                                    <form id="subscribe-form" class="flex flex-col sm:flex-row gap-2">
+                                        <input type="email" id="email-input" required placeholder="your.email@example.com" class="flex-grow px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-wyncell-blue transition duration-300">
+                                        <button type="submit" class="cta-button bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded-md font-medium">Notify Me</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="md:pl-8">
+                            <img src="https://images.unsplash.com/photo-1594123790327-53518841a4a4?q=80&w=2400&auto=format&fit=crop"
+                                 alt="Stylized map of Canada with connection points" 
+                                 class="rounded-lg w-full h-auto shadow-md">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold text-center mb-12 text-gray-900">What Our Customers Say</h2>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                        <div class="flex items-center mb-4 text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-4 italic">"Switched to Wyncell and couldn't be happier. Same speeds, half the price, and the customer service is actually helpful!"</p>
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/40?u=sarah" class="w-10 h-10 rounded-full mr-3" alt="Avatar for Sarah K.">
+                            <div>
+                                <h4 class="font-bold">Sarah K.</h4>
+                                <p class="text-sm text-gray-500">Toronto, ON</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                         <div class="flex items-center mb-4 text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-gray-600 mb-4 italic">"Our small business needed reliable internet without the huge price tag. Wyncell delivered. The 3 free months was a great bonus!"</p>
+                        <div class="flex items-center">
+                             <img src="https://i.pravatar.cc/40?u=michael" class="w-10 h-10 rounded-full mr-3" alt="Avatar for Michael T.">
+                            <div>
+                                <h4 class="font-bold">Michael T.</h4>
+                                <p class="text-sm text-gray-500">Vancouver, BC</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-100">
+                         <div class="flex items-center mb-4 text-yellow-400">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <p class="text-gray-600 mb-4 italic">"Finally, an internet provider that doesn't hike up the price after a year. The speeds are consistent and the price is what they advertise."</p>
+                        <div class="flex items-center">
+                            <img src="https://i.pravatar.cc/40?u=jennifer" class="w-10 h-10 rounded-full mr-3" alt="Avatar for Jennifer L.">
+                            <div>
+                                <h4 class="font-bold">Jennifer L.</h4>
+                                <p class="text-sm text-gray-500">Montreal, QC</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- FAQ Section -->
+        <section id="support" class="py-20 bg-gray-50">
+            <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12 text-gray-900">Frequently Asked Questions</h2>
+                <div class="space-y-4" id="faq-container">
+                    <!-- FAQ items will be injected by JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="gradient-bg text-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready for an internet upgrade?</h2>
+                <p class="text-xl mb-8 opacity-90">Join thousands of happy Canadians who've made the switch to Wyncell.</p>
+                <a href="#home" class="cta-button bg-white text-wyncell-dark hover:bg-gray-200 px-10 py-4 rounded-md font-bold text-lg shadow-lg">Check Plans & Availability</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-wyncell-dark text-white pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-8">
+                <!-- Column 1: Logo & Contact -->
+                <div class="col-span-2 lg:col-span-1">
+                     <a href="#" class="block mb-4">
+                        <!-- DEV NOTE: Replace this src with your 'logo WYNCELL w.png' file path -->
+                        <img src="https://i.imgur.com/rJet8Cg.png" 
+                             alt="Wyncell Logo" class="h-8 w-auto">
+                    </a>
+                    <p class="text-gray-400 mb-4">High-speed internet for all Canadians.</p>
+                     <div class="flex space-x-4">
+                        <a href="#" aria-label="Facebook" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram" class="text-gray-400 hover:text-white text-xl"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <!-- Column 2: Services -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white">Home Internet</a></li>
+                        <li><a href="#business" class="text-gray-400 hover:text-white">Business Internet</a></li>
+                        <li><a href="#coverage" class="text-gray-400 hover:text-white">Coverage Map</a></li>
+                    </ul>
+                </div>
+                <!-- Column 3: Support -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#support" class="text-gray-400 hover:text-white">FAQs</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Contact Us</a></li>
+                    </ul>
+                </div>
+                <!-- Column 4: Company -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
+                    </ul>
+                </div>
+                 <!-- Column 5: Contact -->
+                <div>
+                     <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                     <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-phone mr-2"></i>1-888-WYN-CELL</li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-2"></i>support@wyncell.ca</li>
+                     </ul>
+                </div>
+            </div>
+            
+            <!-- NEW Subscription Section -->
+            <div id="footer-subscribe-section" class="mt-12 border-t border-gray-700 pt-8">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h3 class="text-lg font-bold mb-2">Stay in the loop</h3>
+                        <p class="text-gray-400">Get the latest news, offers, and updates from Wyncell delivered to your inbox.</p>
+                    </div>
+                    <form id="footer-subscribe-form" class="flex flex-col sm:flex-row gap-2">
+                        <input type="email" id="footer-email-input" required placeholder="Enter your email" class="flex-grow px-4 py-3 bg-gray-800 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-wyncell-blue transition duration-300 text-white placeholder-gray-500">
+                        <button type="submit" class="cta-button bg-wyncell-blue hover:bg-sky-500 text-white px-8 py-3 rounded-md font-bold">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 mt-8 text-center text-sm text-gray-500">
+                <p>&copy; 2025 Wyncell Canada Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = document.getElementById('mobile-menu-icon');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                const isActive = mobileMenu.classList.toggle('active');
+                mobileMenuIcon.classList.toggle('fa-bars', !isActive);
+                mobileMenuIcon.classList.toggle('fa-times', isActive);
+                mobileMenuIcon.classList.toggle('rotate-90', isActive);
+            });
+            
+            // --- Close mobile menu on link click ---
+            document.querySelectorAll('.mobile-nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuIcon.classList.remove('fa-times', 'rotate-90');
+                    mobileMenuIcon.classList.add('fa-bars');
+                });
+            });
+
+            // --- FAQ Data and Generation ---
+            const faqs = [
+                {
+                    question: "How does Wyncell compare to other providers?",
+                    answer: "Wyncell offers comparable high-speeds to major providers but at more affordable, transparent prices. We don't lock you into contracts, and our customer service is based entirely in Canada."
+                },
+                {
+                    question: "Is there a contract or cancellation fee?",
+                    answer: "No. Wyncell operates on a month-to-month basis. You can change your plan or cancel at any time without penalty. We believe you should stay with us because you're happy, not because you're locked in."
+                },
+                {
+                    question: "What equipment do I need?",
+                    answer: "We provide a high-performance modem/router combo free with all our plans, so you have everything you need to get started with a powerful Wi-Fi network."
+                },
+                {
+                    question: "How long does installation take?",
+                    answer: "For most customers, installation is quick and can often be done remotely. If a technician visit is required, it typically takes 1-2 hours. We'll find a time that works best for you."
+                },
+                 {
+                    question: "What happens if I move?",
+                    answer: "No problem! Just contact us at least 2 weeks before your move. We'll check for service at your new address and arrange a seamless transfer. There's no fee for moving your service within our coverage area."
+                }
+            ];
+
+            const faqContainer = document.getElementById('faq-container');
+            faqContainer.innerHTML = faqs.map((faq, index) => `
+                <div class="border border-gray-200 rounded-lg overflow-hidden bg-white shadow-sm">
+                    <button class="faq-toggle w-full flex justify-between items-center p-5 text-left font-medium focus:outline-none">
+                        <span>${faq.question}</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+                        <div class="p-5 pt-0">
+                           <p class="text-gray-600">${faq.answer}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // --- FAQ Toggle Functionality ---
+            document.querySelectorAll('.faq-toggle').forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = button.nextElementSibling;
+                    const icon = button.querySelector('i');
+                    
+                    if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                        content.style.maxHeight = '0px';
+                        icon.classList.remove('rotate-180');
+                    } else {
+                        document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = '0px');
+                        document.querySelectorAll('.faq-toggle i').forEach(i => i.classList.remove('rotate-180'));
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+
+            // --- Coverage Check & Notify Me Form Logic ---
+            const coverageForm = document.getElementById('coverage-form');
+            const postalCodeInput = document.getElementById('postal-code-input');
+            const coverageResult = document.getElementById('coverage-result');
+            const notifyForm = document.getElementById('notify-form');
+            const subscribeForm = document.getElementById('subscribe-form');
+            const coverageResponseArea = document.getElementById('coverage-response-area');
+
+            coverageForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const postalCode = postalCodeInput.value.trim().toUpperCase();
+                const regex = /^[A-Z]\d[A-Z][ -]?\d[A-Z]\d$/;
+                
+                coverageResult.textContent = 'Checking...';
+                coverageResult.className = 'mt-4 text-md font-medium text-gray-600';
+                notifyForm.classList.add('hidden');
+
+                setTimeout(() => {
+                    if (!regex.test(postalCode)) {
+                        coverageResult.textContent = 'Please enter a valid Canadian postal code.';
+                        coverageResult.className = 'text-md font-medium text-red-600';
+                        return;
+                    }
+                    
+                    const availablePrefixes = ['M', 'V', 'H', 'T', 'K'];
+                    if (availablePrefixes.includes(postalCode.charAt(0))) {
+                        coverageResult.textContent = `🎉 Good news! Wyncell is available at ${postalCode}.`;
+                        coverageResult.className = 'text-md font-medium text-green-600';
+                    } else {
+                        coverageResult.textContent = `Sorry, Wyncell is not yet available at ${postalCode}.`;
+                        coverageResult.className = 'text-md font-medium text-orange-600';
+                        notifyForm.classList.remove('hidden');
+                    }
+                }, 1000);
+            });
+            
+            subscribeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = document.getElementById('email-input').value;
+                if(email) {
+                    coverageResponseArea.innerHTML = `
+                        <p class="text-md font-medium text-green-600">
+                            <i class="fas fa-check-circle mr-2"></i>Thank you! We've added ${email} to our notification list.
+                        </p>
+                    `;
+                }
+            });
+
+            // --- Footer Subscription Form Logic ---
+            const footerSubscribeForm = document.getElementById('footer-subscribe-form');
+            const footerSubscribeSection = document.getElementById('footer-subscribe-section');
+            footerSubscribeForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const emailInput = document.getElementById('footer-email-input');
+                const email = emailInput.value;
+                if(email) {
+                    footerSubscribeSection.innerHTML = `
+                        <div class="text-center md:text-left">
+                            <h3 class="text-lg font-bold mb-2 text-green-400"><i class="fas fa-check-circle mr-2"></i>You're on the list!</h3>
+                            <p class="text-gray-400">Thanks for subscribing. We'll keep you updated with the latest news and offers from Wyncell.</p>
+                        </div>
+                    `;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
