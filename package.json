@@ -7,11 +7,8 @@
     "start": "next start"
   },
   "dependencies": {
-    "i18next": "^23.0.0",
-    "next": "^13.0.0",
-    "next-i18next": "^14.0.3",
+    "next": "^15.3.4",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-i18next": "^13.0.0"
+    "react-dom": "^18.0.0"
   }
 }

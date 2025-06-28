@@ -1,21 +1,11 @@
-import { useTranslation } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+// ✅ GOOD: Simple static import of translations
+import en from '../public/locales/en/common.json';
 
 export default function Home() {
-  const { t } = useTranslation('common');
   return (
-    <>
-      <h1>{t('greeting')}</h1>
-      <p>{t('welcome')}</p>
-    </>
+    <main>
+      <h1>{en.greeting}</h1>
+      <p>{en.welcome}</p>
+    </main>
   );
-}
-
-// THIS FUNCTION IS REQUIRED!
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      ...(await serverSideTranslations(locale, ['common'])),
-    },
-  };
 }
